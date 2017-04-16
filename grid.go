@@ -13,7 +13,7 @@ type Grid struct {
 	Cells     []*Cell
 }
 
-func (g Grid) Rebder() *vecty.HTML {
+func (g Grid) Render() *vecty.HTML {
 	c := make(vecty.ClassMap)
 	c["mdl-grid"] = true
 	if g.NoSpacing {
