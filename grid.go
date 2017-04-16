@@ -5,10 +5,11 @@ import (
 
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
+	"github.com/wizenerd/color"
 )
 
 type Grid struct {
-	vecty.Component
+	vecty.Core
 	NoSpacing bool
 	Cells     []*Cell
 }
@@ -28,19 +29,20 @@ func (g Grid) Render() *vecty.HTML {
 }
 
 type Cell struct {
-	vecty.Component
-	Children  vecty.MarkupOrComponentOrHTML
-	Mode      Mode
-	Hide      bool
-	Size      int
-	HideMode  Mode
-	Order     bool
-	OrderSize int
-	OrderMode Mode
-	Stretch   bool
-	Top       bool
-	Middle    bool
-	Bottom    bool
+	vecty.Core
+	Children   vecty.MarkupOrComponentOrHTML
+	Mode       Mode
+	Hide       bool
+	Size       int
+	HideMode   Mode
+	Order      bool
+	OrderSize  int
+	OrderMode  Mode
+	Stretch    bool
+	Top        bool
+	Middle     bool
+	Bottom     bool
+	Background color.Color
 }
 
 type Mode byte
@@ -131,6 +133,9 @@ func (c *Cell) Style() vecty.ClassMap {
 	}
 	if c.Bottom {
 		s["mdl-cell-bottom"] = true
+	}
+	if string(c.Background) != "" {
+		s[c.Background.Background()] = true
 	}
 	return s
 }
