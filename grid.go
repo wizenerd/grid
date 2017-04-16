@@ -30,19 +30,22 @@ func (g Grid) Render() *vecty.HTML {
 
 type Cell struct {
 	vecty.Core
-	Children   vecty.MarkupOrComponentOrHTML
-	Mode       Mode
-	Hide       bool
-	Size       int
-	HideMode   Mode
-	Order      bool
-	OrderSize  int
-	OrderMode  Mode
-	Stretch    bool
-	Top        bool
-	Middle     bool
-	Bottom     bool
-	Background color.Color
+	Children    vecty.MarkupOrComponentOrHTML
+	Mode        Mode
+	Hide        bool
+	Size        int
+	HideMode    Mode
+	Order       bool
+	OrderSize   int
+	OrderMode   Mode
+	Stretch     bool
+	Top         bool
+	Middle      bool
+	Bottom      bool
+	Background  color.Color
+	DesktopSize int
+	TabletSize  int
+	PhoneSIze   int
 }
 
 type Mode byte
@@ -97,10 +100,24 @@ func (c *Cell) Style() vecty.ClassMap {
 	m := modes(c.Mode)
 	for _, v := range m {
 		i := toString(c.Size)
-		if v != "" {
-			s["mdl-cell--"+i+"-col-"+v] = true
-		} else {
+		switch v {
+		case Default.String():
 			s["mdl-cell--"+i+"-col"] = true
+		case Desktop.String():
+			if c.DesktopSize != 0 {
+				i = toString(c.DesktopSize)
+			}
+			s["mdl-cell--"+i+"-col-"+v] = true
+		case Tablet.String():
+			if c.TabletSize != 0 {
+				i = toString(c.TabletSize)
+			}
+			s["mdl-cell--"+i+"-col-"+v] = true
+		case Phone.String():
+			if c.PhoneSIze != 0 {
+				i = toString(c.PhoneSIze)
+			}
+			s["mdl-cell--"+i+"-col-"+v] = true
 		}
 	}
 	if c.Order {
