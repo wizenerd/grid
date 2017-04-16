@@ -60,7 +60,7 @@ func (m Mode) String() string {
 	case Tablet:
 		r = "tablet"
 	case Phone:
-		r = "pjone"
+		r = "phone"
 	}
 	return r
 }
